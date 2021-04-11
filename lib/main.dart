@@ -1,3 +1,6 @@
+// a simple chat application in flutter
+// Watch Tutorial: https://youtu.be/Qhwc9V7VNtc
+
 import 'package:flutter/material.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:stream_chat_persistence/stream_chat_persistence.dart';
@@ -7,26 +10,32 @@ final chatPersistentClient = StreamChatPersistenceClient(
   connectionMode: ConnectionMode.background,
 );
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// Create a new instance of [StreamChatClient] passing the apikey obtained from your
-  /// project dashboard.
   final client = StreamChatClient(
-    's2dxdhpxd94g',
+    'gtdcangzswpn', // your stream api key
     logLevel: Level.INFO,
   )..chatPersistenceClient = chatPersistentClient;
 
-  /// Set the current user and connect the websocket. In a production scenario, this should be done using
-  /// a backend to generate a user token using our server SDK.
-  /// Please see the following for more information:
-  /// https://getstream.io/chat/docs/ios_user_setup_and_tokens/
   await client.connectUser(
-    User(id: 'super-band-9'),
-    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoic3VwZXItYmFuZC05In0.0L6lGoeLwkz0aZRUcpZKsvaXtNEDHBcezVTZ0oPq40A',
+    User(
+      id: 'techwithsam',
+      online: true,
+      role: 'Admin',
+      extraData: {'image': 'https://images.app.goo.gl/TLHHzkjMsYahhjfY9'},
+    ),
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidGVjaHdpdGhzYW0ifQ.mv5X_VmUg3gs4WwQP33ILjyiqpAVBAh0CB4OkSxVSIU',
   );
 
-  final channel = client.channel('messaging', id: 'godevs');
+  final channel = client.channel(
+    'messaging',
+    id: 'techsam',
+    extraData: {
+      "image": 'https://images.app.goo.gl/TLHHzkjMsYahhjfY9',
+      "name": "Tech With Sam"
+    },
+  );
 
   await channel.watch();
 
@@ -45,6 +54,7 @@ class MyApp extends StatelessWidget {
       accentColor: Color(0xFF0ADA14),
     );
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       builder: (context, widget) {
         return StreamChat(
           child: widget,
@@ -66,7 +76,10 @@ class ChannelPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ChannelHeader(showBackButton: false),
+      appBar: ChannelHeader(
+          showBackButton: false,
+          showTypingIndicator: true,
+          showConnectionStateTile: true),
       body: Column(
         children: <Widget>[
           Expanded(
@@ -77,4 +90,4 @@ class ChannelPage extends StatelessWidget {
       ),
     );
   }
-}
+} 
