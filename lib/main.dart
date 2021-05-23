@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
 }
 
 class ChannelPage extends StatelessWidget {
-  const ChannelPage({Key key}) : super(key: key);
+  const ChannelPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
