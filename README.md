@@ -1,5 +1,7 @@
 # chat_app
 
+![ScreenShots](https://github.com/techwithsam/chat-app-flutter/blob/main/assets/Frame%2085.png)
+
 A new Flutter project.
 
 ## Getting Started
